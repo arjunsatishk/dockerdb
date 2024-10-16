@@ -1,7 +1,7 @@
 https://hub.docker.com/r/microsoft/mssql-server
 
 Build:
-cd ~ && cd ../../Tech/MsSQL/docker/
+
 docker-compose up --detach--remove-orphans --wait
 docker-compose up --force-recreate --detach --remove-orphans --wait
 docker-compose up --force-recreate --renew-anon-volumes --detach --remove-orphans --wait
