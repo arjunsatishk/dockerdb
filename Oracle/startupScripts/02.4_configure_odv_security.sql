@@ -1,0 +1,36 @@
+--Create users (as sys on CDB)
+CREATE PROFILE c##dv_profile limit
+FAILED_LOGIN_ATTEMPTS UNLIMITED
+PASSWORD_VERIFY_FUNCTION ORA12C_VERIFY_FUNCTION
+PASSWORD_LOCK_TIME UNLIMITED
+CONTAINER=ALL;
+
+--Assign user profile (as sys on CDB)
+ALTER USER c##dbv_owner_root PROFILE c##dv_profile CONTAINER = ALL;
+ALTER USER c##dbv_owner_root_backup PROFILE c##dv_profile CONTAINER = ALL;
+ALTER USER c##dbv_acctmgr_root PROFILE c##dv_profile CONTAINER = ALL;
+ALTER USER c##dbv_acctmgr_root_backup PROFILE c##dv_profile CONTAINER = ALL;
+
+--Create Audit Policies (as sys on CDB)
+CREATE AUDIT POLICY c##dv_logins ACTIONS LOGON;
+AUDIT POLICY c##dv_logins BY USERS WITH GRANTED ROLES DV_OWNER, DV_ACCTMGR WHENEVER NOT SUCCESSFUL;
+
+--Create users (as sys on PDB)
+CONN sys/example123#@localhost:1521/FREEPDB1  as SYSDBA
+CREATE PROFILE dv_profile limit
+FAILED_LOGIN_ATTEMPTS UNLIMITED
+PASSWORD_VERIFY_FUNCTION ORA12C_VERIFY_FUNCTION
+PASSWORD_LOCK_TIME UNLIMITED
+CONTAINER=CURRENT;
+
+--Assign user profile (as sys on PDB)
+CONN sys/example123#@localhost:1521/FREEPDB1  as SYSDBA
+ALTER USER dbv_owner PROFILE dv_profile CONTAINER = CURRENT;
+ALTER USER dbv_owner_backup PROFILE dv_profile CONTAINER = CURRENT;
+ALTER USER dbv_acctmgr PROFILE dv_profile CONTAINER = CURRENT;
+ALTER USER dbv_acctmgr_backup PROFILE dv_profile CONTAINER = CURRENT;
+
+--Create Audit Policies (as sys on PDB)
+CONN sys/example123#@localhost:1521/FREEPDB1  as SYSDBA
+CREATE AUDIT POLICY dv_logins ACTIONS LOGON;
+AUDIT POLICY dv_logins BY USERS WITH GRANTED ROLES DV_OWNER, DV_ACCTMGR WHENEVER NOT SUCCESSFUL;

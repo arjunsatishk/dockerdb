@@ -1,0 +1,16 @@
+https://hub.docker.com/_/neo4j
+
+Build:
+cd ~ && cd ../../Tech/Neo4j/docker/
+docker-compose up --detach --remove-orphans --wait
+docker-compose up --force-recreate --detach --remove-orphans --wait
+
+Connect:
+http://127.0.0.1:7474/
+    username: neo4j
+    default password: neo4j
+    new password: celtic-night-demand-prepare-pagoda-1842
+
+Troubleshoot:
+docker logs neo4jdb-container
+docker exec -it neo4jdb-container bash

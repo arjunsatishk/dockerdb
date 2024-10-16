@@ -1,0 +1,45 @@
+version: "3"
+
+# More info at https://hub.docker.com/_/postgres
+
+name: postgresdb
+
+services:
+  postgresDb-service:
+    container_name: postgresDb-container
+    image: postgres:15
+    #image: postgres:16-alpine
+    #image: postgres:latest
+    #image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example123#
+      POSTGRES_DB: postgresDb
+      #PGDATA: /var/lib/postgresql/data
+      PGDATA: /pgData
+    command: postgres -c shared_preload_libraries=pg_stat_statements -c pg_stat_statements.track=all
+    hostname: postgresDb
+    ports:
+      - "127.0.0.1:5432:5432/tcp" #postgres listener
+    volumes:
+      #- 'pgData:/pgData/'
+      #- './pgData/:/pgData/'
+      - './initdb:/docker-entrypoint-initdb.d'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "postgresDb"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  #Placeholder dependency to ensure DB is up and healthy
+  hello-world-service:
+    container_name: hello-postgresDb-container
+    image: hello-world
+    depends_on:
+      postgresDb-service:
+        condition: service_healthy
+
+#volumes:
+#  pgData:

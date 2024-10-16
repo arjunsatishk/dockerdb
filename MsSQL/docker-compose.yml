@@ -1,0 +1,40 @@
+version: "3"
+
+# More info at https://hub.docker.com/r/microsoft/mssql-server
+
+name: mssqldb
+
+services:
+  mssqlDb-service:
+    container_name: mssqlDb-container
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    # image: mcr.microsoft.com/mssql/server:2019-latest
+    # image: mcr.microsoft.com/mssql/server:2017-latest
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: example123#
+      MSSQL_PID: Developer
+    hostname: mssqlDb
+    ports:
+      - "127.0.0.1:1433:1433/tcp" #mssql listener
+    volumes:
+      #- 'mssqlData:/var/opt/mssql/data'
+      - './mssqlData/:/var/opt/mssql/data'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P 'example123#' -Q 'select 1'"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+
+  #Placeholder dependency to ensure DB is up and healthy
+  hello-world-service:
+    container_name: hello-mssqlDb-container
+    image: hello-world
+    depends_on:
+      mssqlDb-service:
+        condition: service_healthy
+
+#volumes:
+#  mssqlData:
