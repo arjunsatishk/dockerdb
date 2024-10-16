@@ -1,0 +1,55 @@
+`version: "3"
+
+# More info at https://hub.docker.com/_/mongo
+
+name: mongodb
+
+services:
+  mongoDb-service:
+    container_name: mongoDb-container
+    #image: mongo:8.0-rc
+    image: mongo:7
+    #image: mongo:6
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 'root'
+      MONGO_INITDB_ROOT_PASSWORD: 'example123'
+      # MONGO_INITDB_DATABASE: 'test'   # test is the default db for init scripts
+    hostname: mongoDb
+    ports:
+      - "127.0.0.1:27017:27017/tcp" #mongo listener
+    volumes:
+      # - 'mongoData:/data/db'
+      # - './mongoData/:/data/db'
+      - './initdb:/docker-entrypoint-initdb.d'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet 127.0.0.1:27017/root --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)'"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  mongo-express:
+    container_name: mongoExpress-container
+    image: mongo-express
+    depends_on:
+      mongoDb-service:
+        condition: service_healthy
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://root:example123@mongoDb-service:27017/
+      ME_CONFIG_BASICAUTH: false
+    hostname: mongoExpress
+    ports:
+      - "127.0.0.1:8081:8081/tcp" #mongo-express listener
+    restart: unless-stopped
+
+  #Placeholder dependency to ensure DB is up and healthy
+  hello-world-service:
+    container_name: hello-mongoDb-container
+    image: hello-world
+    depends_on:
+      mongoDb-service:
+        condition: service_healthy
+
+# volumes:
+#  mongoData:

@@ -1,0 +1,19 @@
+https://hub.docker.com/_/mongo
+
+Build:
+cd ~ && cd ../../Tech/MongoDb/docker/
+docker-compose up --detach --remove-orphans --wait
+docker-compose up --force-recreate --detach --remove-orphans --wait
+docker-compose up --force-recreate --renew-anon-volumes --detach --remove-orphans --wait
+
+Connect:
+docker exec -it mongoDb-container mongosh "mongodb://127.0.0.1:27017/"
+docker exec -it mongoDb-container mongosh "mongodb://root:example123@127.0.0.1:27017/"
+http://127.0.0.1:8081/
+
+Troubleshoot:
+docker logs --follow mongoDb-container
+docker exec -it mongoDb-container bash
+
+docker logs --follow mongoExpress-container
+docker exec -it mongoExpress-container bash
