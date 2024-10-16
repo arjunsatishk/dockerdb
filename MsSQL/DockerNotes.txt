@@ -1,0 +1,14 @@
+https://hub.docker.com/r/microsoft/mssql-server
+
+Build:
+cd ~ && cd ../../Tech/MsSQL/docker/
+docker-compose up --detach--remove-orphans --wait
+docker-compose up --force-recreate --detach --remove-orphans --wait
+docker-compose up --force-recreate --renew-anon-volumes --detach --remove-orphans --wait
+
+Connect:
+docker exec -it mssqlDb-container opt/mssql-tools18/bin/sqlcmd -C -S 127.0.0.1 -U sa -P 'example123#'
+
+Troubleshoot:
+docker logs --follow mssqlDb-container
+docker exec -it mssqlDb-container bash
