@@ -1,0 +1,41 @@
+version: "3"
+
+# https://container-registry.oracle.com/ords/f?p=113:10:15562779738983:::::
+
+name: oracledb
+
+services:
+  oracleDb-service:
+    container_name: oracleDb-container
+    image: container-registry.oracle.com/database/free:23.5.0.0
+    #image: container-registry.oracle.com/database/free:23.4.0.0
+    #image: container-registry.oracle.com/database/free:latest
+    environment:
+      ORACLE_PWD: example123#
+      ORACLE_CHARACTERSET: AL32UTF8
+    hostname: oracleDb
+    ports:
+      - "127.0.0.1:1521:1521/tcp" #oracle listener
+    volumes:
+      #- 'oraData:/opt/oracle/oradata'
+      #- './oraData:/opt/oracle/oradata'
+      - './startupScripts:/opt/oracle/scripts/startup'
+      - './setupScripts:/opt/oracle/scripts/setup'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "echo 'SELECT 1 FROM DUAL;' | sqlplus -s sys/example123#@127.0.0.1:1522/FREE"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  #Placeholder dependency to ensure DB is up and healthy
+  hello-world-service:
+    container_name: hello-oracleDb-container
+    image: hello-world
+    depends_on:
+      oracleDb-service:
+        condition: service_healthy
+
+#volumes:
+#  oraData:
