@@ -1,6 +1,7 @@
 https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator
 
 Build:
+
 docker-compose up --detach --remove-orphans --wait
 docker-compose up --force-recreate --detach --remove-orphans --wait
 

@@ -1,7 +1,7 @@
 https://hub.docker.com/_/postgres
 
 Build:
-cd ~ && cd ../../Tech/Postgres/docker/
+
 docker-compose up --detach --remove-orphans --wait
 docker-compose up --force-recreate --detach  --remove-orphans --wait
 
@@ -11,5 +11,5 @@ PGPASSWORD='example123#' && docker exec -it postgresDb-container psql -d test_db
 PGPASSWORD='test_usr01#' && docker exec -it postgresDb-container psql -d test_db01 -U test_usr01    #test_db01 as normal user
 
 Troubleshoot:
-docker logs  --follow postgresDb-container
+docker logs --follow postgresDb-container
 docker exec -it postgresDb-container bash
