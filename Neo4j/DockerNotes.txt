@@ -9,7 +9,6 @@ Connect:
 http://127.0.0.1:7474/
     username: neo4j
     default password: neo4j
-    new password: celtic-night-demand-prepare-pagoda-1842
 
 Troubleshoot:
 docker logs neo4jdb-container
