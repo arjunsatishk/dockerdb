@@ -1,5 +1,3 @@
-version: "3"
-
 # More info at https://hub.docker.com/_/neo4j
 
 name: neo4jdb

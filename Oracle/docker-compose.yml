@@ -1,6 +1,4 @@
-version: "3"
-
-# https://container-registry.oracle.com/ords/f?p=113:10:15562779738983:::::
+# # More info at https://container-registry.oracle.com/ords/f?p=113:10:15562779738983:::::
 
 name: oracledb
 
