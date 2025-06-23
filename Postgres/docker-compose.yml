@@ -3,12 +3,11 @@
 name: postgresdb
 
 services:
-  postgresDb-service:
+  postgresdb-service:
     container_name: postgresDb-container
-    image: postgres:16
-    #image: postgres:16-alpine
-    #image: postgres:latest
-    #image: postgres:alpine
+    build:
+      context: .
+      dockerfile: Dockerfile
     user: postgres #Fix for error 'FATAL:  role "root" does not exist'.
     environment:
       POSTGRES_USER: postgres
@@ -36,7 +35,7 @@ services:
     container_name: hello-postgresDb-container
     image: hello-world
     depends_on:
-      postgresDb-service:
+      postgresdb-service:
         condition: service_healthy
 
 #volumes:
