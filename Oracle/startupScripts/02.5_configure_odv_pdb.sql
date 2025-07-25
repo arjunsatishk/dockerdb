@@ -1,11 +1,4 @@
---Create privileges (as sys on PDB)
-CONN sys/example123#@localhost:1521/FREEPDB1 as SYSDBA
-GRANT CREATE SESSION, SET CONTAINER TO dbv_owner IDENTIFIED BY dbv_owner123#;
-GRANT CREATE SESSION, SET CONTAINER TO dbv_owner_backup IDENTIFIED BY dbv_owner_backup123#;
-GRANT CREATE SESSION, SET CONTAINER TO dbv_acctmgr IDENTIFIED BY dbv_acctmgr123#;
-GRANT CREATE SESSION, SET CONTAINER TO dbv_acctmgr_backup IDENTIFIED BY dbv_acctmgr_backup123#;
-
--- Configure backup accounts (as sys on PDB)
+-- Configure Data Vault (as sys on PDB)
 CONN sys/example123#@localhost:1521/FREEPDB1  as SYSDBA
 BEGIN
 CONFIGURE_DV (

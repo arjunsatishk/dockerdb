@@ -1,10 +1,4 @@
---Create users (as sys on CDB)
-GRANT CREATE SESSION, SET CONTAINER TO c##dbv_owner_root IDENTIFIED BY dbv_owner_root123# CONTAINER = ALL;
-GRANT CREATE SESSION, SET CONTAINER TO c##dbv_owner_root_backup IDENTIFIED BY dbv_owner_root_backup123# CONTAINER = ALL;
-GRANT CREATE SESSION, SET CONTAINER TO c##dbv_acctmgr_root IDENTIFIED BY dbv_acctmgr_root123# CONTAINER = ALL;
-GRANT CREATE SESSION, SET CONTAINER TO c##dbv_acctmgr_root_backup IDENTIFIED BY dbv_acctmgr_root_backup123# CONTAINER = ALL;
-
--- Configure backup accounts (as sys on CDB)
+-- Configure Data Vault  (as sys on CDB)
 BEGIN
 CONFIGURE_DV (
 dvowner_uname         => 'c##dbv_owner_root_backup',
