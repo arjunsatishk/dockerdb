@@ -1,0 +1,16 @@
+https://hub.docker.com/r/puppygraph/puppygraph
+https://docs.puppygraph.com/getting-started/launching-puppygraph-in-docker/
+
+Build:
+
+docker-compose up --detach --remove-orphans --wait
+docker-compose up --force-recreate --detach  --remove-orphans --wait
+
+Connect:
+http://127.0.0.1:8081/
+    username: puppygraph
+    default password: example123#
+
+Troubleshoot:
+docker logs --follow puppygraphDb-container
+docker exec -it puppygraphDb-container bash

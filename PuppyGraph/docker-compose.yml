@@ -1,0 +1,38 @@
+# More info at https://hub.docker.com/r/puppygraph/puppygraph
+
+name: puppygraphdb
+
+services:
+  puppygraphDb-service:
+    container_name: puppygraphDb-container
+    image: puppygraph/puppygraph:stable
+    #image: puppygraph/puppygraph:stable-minimal
+    environment:
+      PUPPYGRAPH_PASSWORD: example123#  #username: puppygraph
+      METRICS_ENABLED: true
+    hostname: puppygraphDb
+    ports:
+      - "127.0.0.1:8081:8081/tcp" #puppygraph webUI
+      - "127.0.0.1:8182:8182/tcp" #puppygraph gremlin server
+      - "127.0.0.1:7688:7687/tcp" #puppygraph openCypher
+    #volumes:
+      #- 'puppygraphData:/data/'
+      #- './puppygraphData/:/data/'
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "curl -k -f http://127.0.0.1:8081 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 6
+      start_period: 10s
+
+  #Placeholder dependency to ensure DB is up and healthy
+  hello-world-service:
+    container_name: hello-puppygraphDb-container
+    image: hello-world
+    depends_on:
+      puppygraphDb-service:
+        condition: service_healthy
+
+#volumes:
+#  puppygraphData:

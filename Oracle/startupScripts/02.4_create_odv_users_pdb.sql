@@ -1,19 +1,9 @@
---Create user profile (as sys on CDB)
-CREATE PROFILE c##dv_profile limit
-FAILED_LOGIN_ATTEMPTS UNLIMITED
-PASSWORD_VERIFY_FUNCTION ORA12C_VERIFY_FUNCTION
-PASSWORD_LOCK_TIME UNLIMITED
-CONTAINER=ALL;
-
---Assign user profile (as sys on CDB)
-ALTER USER c##dbv_owner_root PROFILE c##dv_profile CONTAINER = ALL;
-ALTER USER c##dbv_owner_root_backup PROFILE c##dv_profile CONTAINER = ALL;
-ALTER USER c##dbv_acctmgr_root PROFILE c##dv_profile CONTAINER = ALL;
-ALTER USER c##dbv_acctmgr_root_backup PROFILE c##dv_profile CONTAINER = ALL;
-
---Create audit policies (as sys on CDB)
-CREATE AUDIT POLICY c##dv_logins ACTIONS LOGON;
-AUDIT POLICY c##dv_logins BY USERS WITH GRANTED ROLES DV_OWNER, DV_ACCTMGR WHENEVER NOT SUCCESSFUL;
+--Create privileges (as sys on PDB)
+CONN sys/example123#@localhost:1521/FREEPDB1 as SYSDBA
+GRANT CREATE SESSION, SET CONTAINER TO dbv_owner IDENTIFIED BY dbv_owner123#;
+GRANT CREATE SESSION, SET CONTAINER TO dbv_owner_backup IDENTIFIED BY dbv_owner_backup123#;
+GRANT CREATE SESSION, SET CONTAINER TO dbv_acctmgr IDENTIFIED BY dbv_acctmgr123#;
+GRANT CREATE SESSION, SET CONTAINER TO dbv_acctmgr_backup IDENTIFIED BY dbv_acctmgr_backup123#;
 
 --Create user profile (as sys on PDB)
 CONN sys/example123#@localhost:1521/FREEPDB1  as SYSDBA
