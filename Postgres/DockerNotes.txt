@@ -1,12 +1,14 @@
 https://hub.docker.com/_/postgres
+https://github.com/apache/age/blob/master/README.md
+https://github.com/pgvector/pgvector/blob/master/README.md
 
-Build:
+Build (on Ubuntu Host):
   docker compose build
   docker compose build --pull --no-cache --with-dependencies
 
-  docker-compose up --build --detach--remove-orphans --wait
-  docker-compose up --build --force-recreate --detach --remove-orphans --wait
-  docker-compose up --build --force-recreate --renew-anon-volumes --detach --remove-orphans --wait
+  docker compose up --build --detach--remove-orphans --wait
+  docker compose up --build --force-recreate --detach --remove-orphans --wait
+  docker compose up --build --renew-anon-volumes --force-recreate --detach --remove-orphans --wait
 
 Connect:
   PGPASSWORD='example123#' && docker exec -it postgresDb-container psql -d postgresDb -U postgres     #default db as super_user
