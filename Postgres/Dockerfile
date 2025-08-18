@@ -10,21 +10,20 @@ RUN apt-get update \
         git \
         postgresql-server-dev-16 \
         cmake \
-        ca-certificates \
         flex \
         bison \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone, build, and install pgvector
+# Clone, build, and install pgvector. sslVerify is disabled as image is intended for educational purposes only.
 WORKDIR /tmp
-RUN git clone https://github.com/pgvector/pgvector.git \
+RUN git -c http.sslVerify=false clone https://github.com/pgvector/pgvector.git \
     && cd pgvector \
     && make \
     && make install
 
-# Clone, build, and install Apache AGE
+# Clone, build, and install Apache AGE. sslVerify is disabled as image is intended for educational purposes only.
 WORKDIR /tmp
-RUN git clone https://github.com/apache/age.git \
+RUN git -c http.sslVerify=false clone https://github.com/apache/age.git \
     && cd age \
     && make PG_CONFIG=/usr/bin/pg_config \
     && make install PG_CONFIG=/usr/bin/pg_config
@@ -35,9 +34,8 @@ RUN apt-get remove --purge -y \
         git \
         postgresql-server-dev-16 \
         cmake \
-        ca-certificates \
         flex \
         bison \
     && apt-get autoremove -y \
     && apt-get clean \
-    && rm -rf /tmp/pgvector /tmp/
+    && rm -rf /tmp/pgvector /tmp/age

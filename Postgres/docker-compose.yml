@@ -1,4 +1,6 @@
 # More info at https://hub.docker.com/_/postgres
+#  https://github.com/apache/age/blob/master/README.md
+#  https://github.com/pgvector/pgvector/blob/master/README.md
 
 name: postgresdb
 

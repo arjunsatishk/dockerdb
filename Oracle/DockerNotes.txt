@@ -1,11 +1,11 @@
 https://container-registry.oracle.com/ords/f?p=113:10:15562779738983:::::
 https://www.oracle.com/database/technologies/oracle-database-software-downloads.html
 
-Build Windows (Docker Desktop):
+Build (on Windows Host with Docker Desktop):
 docker-compose up --detach --remove-orphans --wait
 docker-compose up --force-recreate --detach --remove-orphans --wait
 
-Build Ubuntu:
+Build (on Ubuntu Host):
 docker compose up --detach --remove-orphans --wait
 docker compose up --force-recreate --detach --remove-orphans --wait
 
