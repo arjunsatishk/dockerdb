@@ -1,10 +1,10 @@
 https://hub.docker.com/r/puppygraph/puppygraph
 https://docs.puppygraph.com/getting-started/launching-puppygraph-in-docker/
 
-Build:
-
-docker-compose up --detach --remove-orphans --wait
-docker-compose up --force-recreate --detach  --remove-orphans --wait
+Build (on Ubuntu Host):
+  docker compose up --detach --remove-orphans --wait
+  docker compose up --force-recreate --detach --remove-orphans --wait
+  docker compose up --build --renew-anon-volumes --force-recreate --detach --remove-orphans --wait
 
 Connect:
 http://127.0.0.1:8081/

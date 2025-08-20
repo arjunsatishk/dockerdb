@@ -1,9 +1,9 @@
 https://hub.docker.com/_/neo4j
 
-Build:
-
-docker-compose up --detach --remove-orphans --wait
-docker-compose up --force-recreate --detach --remove-orphans --wait
+Build (on Ubuntu Host):
+  docker compose up --detach --remove-orphans --wait
+  docker compose up --force-recreate --detach --remove-orphans --wait
+  docker compose up --build --renew-anon-volumes --force-recreate --detach --remove-orphans --wait
 
 Connect:
 http://127.0.0.1:7474/
