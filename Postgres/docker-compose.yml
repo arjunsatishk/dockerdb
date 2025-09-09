@@ -10,6 +10,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: postgresdb:latest
     user: postgres #Fix for error 'FATAL:  role "root" does not exist'.
     environment:
       POSTGRES_USER: postgres
