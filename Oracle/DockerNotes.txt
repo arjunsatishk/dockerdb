@@ -11,18 +11,18 @@ Connect:
     docker exec -it oracleDb-container bash
     docker exec -it oracleDb-container sqlplus / as sysdba
     docker exec -it oracleDb-container sqlplus sys/example123#@FREE as sysdba
-    docker exec -it oracleDb-container sqlplus system/<your_password>@FREE
+    docker exec -it oracleDb-container sqlplus system/example123#@FREE
     docker exec -it oracleDb-container sqlplus pdbadmin/example123#@FREEPDB1
 
 # Connecting from Outside the Container
   # Connect to the database at the CDB$ROOT level as sysdba:
-    sqlplus sys/<your password>@//localhost:<port mapped to 1521>/FREE as sysdba
+    sqlplus sys/example123#@//localhost:<port mapped to 1521>/FREE as sysdba
   # Connect as non sysdba at the CDB$ROOT level:
-    sqlplus system/<your password>@//localhost:<port mapped to 1521>/FREE
+    sqlplus system/example123#@//localhost:<port mapped to 1521>/FREE
   # Connect to the default Pluggable Database (PDB) within the FREE Database:
-    sqlplus pdbadmin/<your password>@//localhost:<port mapped to 1521>/FREEPDB1
+    sqlplus pdbadmin/example123#@//localhost:<port mapped to 1521>/FREEPDB1
 
 Troubleshoot:
 # Database Alert Logs
     docker logs --follow oracleDb-container
-    docker exec -it postgresDb-container bash
+    docker exec -it oracleDb-container bash
