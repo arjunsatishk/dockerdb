@@ -1,0 +1,2 @@
+--Set PARALLEL_MAX_SERVERS to 5 to address warning in alert log.
+ALTER SYSTEM SET PARALLEL_MAX_SERVERS=4 SCOPE=BOTH SID='*';
