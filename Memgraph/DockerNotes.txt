@@ -1,0 +1,28 @@
+# More info at https://hub.docker.com/r/memgraph/memgraph
+# https://memgraph.com/docs/getting-started/install-memgraph/docker
+# https://memgraph.com/docs/getting-started/install-memgraph/docker-compose
+
+Build (on Ubuntu Host):
+  docker compose up --detach --remove-orphans --wait
+  docker compose up --force-recreate --detach --remove-orphans --wait
+  docker compose up --build --renew-anon-volumes --force-recreate --detach --remove-orphans --wait
+
+Stop:
+  docker compose down
+  docker compose down --volumes # Removes persistent data volumes
+  docker compose down --volumes --rmi all # Removes persistent data volumes
+
+Connect Database:
+  # Using mgconsole from within the container:
+    docker exec -it memgraphDb-container mgconsole
+
+Connect Web Interface (memgraph lab):
+  http://127.0.0.1:3000/
+
+Troubleshoot Database:
+  docker logs --follow memgraphdb-container
+  docker exec -it memgraphdb-container bash
+
+Troubleshoot Web Interface:
+  docker logs --follow memgraphlab-container
+  docker exec -it memgraphlab-container bash

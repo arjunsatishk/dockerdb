@@ -1,0 +1,41 @@
+# More info at https://hub.docker.com/r/memgraph/memgraph
+# https://memgraph.com/docs/getting-started/install-memgraph/docker
+# https://memgraph.com/docs/getting-started/install-memgraph/docker-compose
+
+name: memgraph
+
+services:
+  memgraph-service:
+    container_name: memgraphdb-container
+    image: memgraph/memgraph:latest
+    # image: memgraph/memgraph-mage:latest  #includes mage components (memgraph advanced graph extension)
+    environment:
+      MEMGRAPH_USER: memgraph
+      MEMGRAPH_PASSWORD: memgraph
+      MEMGRAPH_CONFIG: /etc/memgraph/memgraph_custom.conf
+    hostname: memgraphdb
+    ports:
+      - "127.0.0.1:7687:7687/tcp"  #memgraph bolt
+      # - "127.0.0.1:7444:7444/tcp"  #memgraph http api
+    volumes:
+      - 'mgData:/var/lib/memgraph' #data in docker volume
+      # - './mgData/:/var/lib/memgraph' #data in local directory
+      - './mgConfig/memgraph_custom.conf:/etc/memgraph/memgraph_custom.conf'
+    restart: unless-stopped
+
+  memgraphlab-service:
+    container_name: memgraphlab-container
+    image: memgraph/lab:latest
+    environment:
+      QUICK_CONNECT_MG_HOST: memgraphdb
+      QUICK_CONNECT_MG_PORT: 7687
+      LOG_LEVEL: info #debug,info,warn,error
+    hostname: memgraphlab
+    ports:
+      - "127.0.0.1:3000:3000"
+    restart: unless-stopped
+    depends_on:
+      - memgraph-service
+
+volumes:
+  mgData:
